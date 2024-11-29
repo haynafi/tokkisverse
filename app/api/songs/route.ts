@@ -3,6 +3,17 @@ import path from 'path'
 import fs from 'fs'
 import Papa from 'papaparse'
 
+// Define an interface for your data structure
+interface Song {
+  id: number;
+  cat: string;
+  title: string;
+  song_name: string;
+  path: string;
+  song_img_path: string;
+  date: string; // Note: changed from release_date to match your CSV
+}
+
 export async function GET() {
     try {
         // Construct the path to the CSV file
@@ -11,16 +22,16 @@ export async function GET() {
         // Read the CSV file
         const fileContents = fs.readFileSync(filePath, 'utf8')
 
-        // Parse the CSV
-        const parsedData = Papa.parse(fileContents, {
+        // Parse the CSV with type inference
+        const { data } = Papa.parse<Song>(fileContents, {
             header: true,
             dynamicTyping: true,
             skipEmptyLines: true
-        }).data
+        })
 
-        // Sort by release date (assuming release_date is in a parseable format)
-        const sortedData = parsedData
-            .filter(item => item.date) // Remove entries without a date
+        // Sort by date (descending order)
+        const sortedData = (data as Song[])
+            .filter((item): item is Song => !!item.date) // Type predicate to ensure non-null date
             .sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
