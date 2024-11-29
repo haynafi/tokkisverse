@@ -1,4 +1,5 @@
 import MusicPlayer from './components/MusicPlayer'
+import { Analytics } from "@vercel/analytics/react"
 
 export default function Home() {
   return (
