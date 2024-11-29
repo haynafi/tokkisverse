@@ -7,6 +7,7 @@ export default function Home() {
       {/* <h1 className="text-3xl font-bold text-center mb-8">TokkisVerse MP</h1> */}
       <h5 className="font-bold text-center mb-8">TokkisVerse MediaPlayer <a href="https://trakteer.id/haynafi" target='blank_'>by Me</a></h5>
       <MusicPlayer />
+      <Analytics />
     </main>
   )
 }
