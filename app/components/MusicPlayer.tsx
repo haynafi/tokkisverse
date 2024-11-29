@@ -84,7 +84,7 @@ export default function MusicPlayer() {
         await navigator.share({
           title: currentSong.song_name,
           text: `Check out this song: ${currentSong.song_name}`,
-          url: window.location.href,
+          url: `https://www.tokkisverse.com${currentSong.path}`,
         })
       } catch (error) {
         console.log('Error sharing:', error)
