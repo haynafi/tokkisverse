@@ -40,15 +40,13 @@ export default function MusicPlayer() {
   }, [])
 
   useEffect(() => {
-    if (audioRef.current) {
+    if (audioRef.current && currentSong) {
+      audioRef.current.src = currentSong.path; // Update the audio source
       if (isPlaying) {
-        audioRef.current.load()
-        audioRef.current.play().catch(error => console.error('Error playing audio:', error))
-      } else {
-        audioRef.current.pause()
+        audioRef.current.play().catch(error => console.error('Error playing audio:', error));
       }
     }
-  }, [isPlaying, currentSong])
+  }, [currentSong, isPlaying]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying)
@@ -61,10 +59,10 @@ export default function MusicPlayer() {
   }
 
   const handleNext = () => {
-    const currentIndex = songs.findIndex(song => song.id === currentSong?.id)
-    const nextIndex = (currentIndex + 1) % songs.length
-    setCurrentSongAndReset(songs[nextIndex])
-  }
+    const currentIndex = songs.findIndex(song => song.id === currentSong?.id);
+    const nextIndex = (currentIndex + 1) % songs.length;
+    setCurrentSongAndReset(songs[nextIndex]);
+  };
 
   const handleTimeUpdate = () => {
     if (audioRef.current) {
@@ -106,13 +104,13 @@ export default function MusicPlayer() {
 
   const setCurrentSongAndReset = (song: Song) => {
     if (audioRef.current) {
-      audioRef.current.pause()
-      audioRef.current.currentTime = 0
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
-    setCurrentSong(song)
-    setIsPlaying(false)
-    setCurrentTime(0)
-  }
+    setCurrentSong(song);
+    setIsPlaying(true); // Set to true to autoplay the new song
+    setCurrentTime(0);
+  };
 
   if (!currentSong) {
     return <div>Loading...</div>
