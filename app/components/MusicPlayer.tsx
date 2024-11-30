@@ -8,6 +8,8 @@ import { Slider } from '@/components/ui/slider'
 
 interface Song {
   id: number
+  cat: string
+  title: string
   song_name: string
   path: string
   song_img_path: string
@@ -216,7 +218,8 @@ export default function MusicPlayer() {
               </div>
               <div>
                 <p className="font-medium">{song.song_name}</p>
-                <p className="text-sm text-gray-600">{new Date(song.date).toLocaleDateString()}</p>
+                {/* <p className="text-sm text-gray-600">{new Date(song.date).toLocaleDateString()}</p> */}
+                <p className="text-sm text-gray-600">{song.title}</p>
               </div>
             </li>
           ))}
