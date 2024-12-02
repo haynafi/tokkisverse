@@ -28,7 +28,7 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const volumeSliderRef = useRef<HTMLDivElement>(null)
   const [volume, setVolume] = useState(1)
-  const [isVolumeHovered, setIsVolumeHovered] = useState(false)
+  const [isVolumeVisible, setIsVolumeVisible] = useState(false)
 
   useEffect(() => {
     fetch('/api/songs')
@@ -103,6 +103,8 @@ export default function MusicPlayer() {
     if (audioRef.current) {
       audioRef.current.volume = newVolume
     }
+    // Keep the volume slider visible after changing the volume
+    setIsVolumeVisible(true)
   }
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,11 +168,11 @@ export default function MusicPlayer() {
           <Button
             variant="outline"
             size="icon"
-            onMouseEnter={() => setIsVolumeHovered(true)}
+            onClick={() => setIsVolumeVisible(!isVolumeVisible)}
           >
             <Volume2 className="h-4 w-4" />
           </Button>
-          {isVolumeHovered && (
+          {isVolumeVisible && (
             <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-2 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
               <Slider
                 orientation="vertical"
